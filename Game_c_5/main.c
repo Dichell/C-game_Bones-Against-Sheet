@@ -22,6 +22,8 @@ void initStars(GameState *game)
 }
 
 
+
+
 void loadGame(GameState *game)
 {
     SDL_Surface *surface = NULL;
