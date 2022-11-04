@@ -14,8 +14,9 @@
 #define MAN_PIC_H 72
 #define MAN_PIC_W 49
 
-#define NUMBER_STARS 100
- 
+#define NUMBER_GHOSTS 100
+#define NUMBER_LEDGES 100
+
 #include <SDL2/SDL.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2_image/SDL_image.h>
@@ -35,7 +36,13 @@ typedef struct {
 typedef struct {
     int x, y, baseX, baseY, mode;
     float phase;
-} Star;
+} Ghost;
+
+
+typedef struct {
+    int x, y, onShot, liveTime;
+    float phase, time;
+} Laser;
 
 
 typedef struct {
@@ -48,11 +55,13 @@ typedef struct {
     float scrollX, scrollY;
     
     Man man;            // Player
-    Star stars[NUMBER_STARS];    // Stars
-    Ledge ledges[100];
+    Ghost ghosts[NUMBER_GHOSTS];    // Ghosts
+    Laser lasers[NUMBER_GHOSTS];
+    Ledge ledges[NUMBER_LEDGES];
     
-    SDL_Texture *star;          // Images
-    SDL_Texture *manFrames[2];  // Images
+    SDL_Texture *ghost;          // Images
+    SDL_Texture *laser;          // Images
+    SDL_Texture *manFrames[3];  // Images
     SDL_Texture *brick;         // Images
     SDL_Texture *fire;
 
@@ -63,7 +72,7 @@ typedef struct {
     TTF_Font *font;
     
     // Time
-    int time, deathCount;
+    int time, deathCount, laserSpeed;
     int statusState;
     
     // Sounds

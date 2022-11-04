@@ -11,13 +11,16 @@
 int done = 0;
 
 
-void initStars(GameState *game)
+void initGhosts(GameState *game)
 {
-    for(int i=1; i < NUMBER_STARS; i++){
-        game->stars[i].baseX = i*320 + random()%300;
-        game->stars[i].baseY = random()%720;
-        game->stars[i].mode = random()%2;
-        game->stars[i].phase = 2*3.14*(random()%360)/360.0f;
+    for(int i=3; i < NUMBER_GHOSTS*0.6; i++){
+        game->ghosts[i].baseX = i*350 + random()%300;
+        game->ghosts[i].baseY = random()%600;
+        game->ghosts[i].mode = random()%2;
+        game->ghosts[i].phase = 2*3.14*(random()%360)/360.0f;
+        
+        game->lasers[i].onShot = 0;
+        game->lasers[i].liveTime = 0;
     }
 }
 
@@ -28,13 +31,22 @@ void loadGame(GameState *game)
 {
     SDL_Surface *surface = NULL;
 
-    surface = IMG_Load("images/star.png");
+    surface = IMG_Load("images/ghost_1.png");
     if(surface == NULL){
-        printf("cannot find star.png!\n\n");
+        printf("cannot find ghost.png!\n\n");
         SDL_Quit();
         exit(1);
     }
-    game->star = SDL_CreateTextureFromSurface(game->renderer, surface);
+    game->ghost = SDL_CreateTextureFromSurface(game->renderer, surface);
+    SDL_FreeSurface(surface);
+    
+    surface = IMG_Load("images/laser.png");
+    if(surface == NULL){
+        printf("cannot find laser.png!\n\n");
+        SDL_Quit();
+        exit(1);
+    }
+    game->laser = SDL_CreateTextureFromSurface(game->renderer, surface);
     SDL_FreeSurface(surface);
     
     surface = IMG_Load("images/fire.png");
@@ -48,7 +60,7 @@ void loadGame(GameState *game)
     
     surface = IMG_Load("images/skeleton_2_s.png");
     if(surface == NULL){
-        printf("cannot find skeleton_s.png!\n\n");
+        printf("cannot find skeleton_2_s.png!\n\n");
         SDL_Quit();
         exit(1);
     }
@@ -57,13 +69,22 @@ void loadGame(GameState *game)
     
     surface = IMG_Load("images/skeleton_2_r.png");
     if(surface == NULL){
-        printf("cannot find skeleton_s.png!\n\n");
+        printf("cannot find skeleton_2_r.png!\n\n");
         SDL_Quit();
         exit(1);
     }
     game->manFrames[1] = SDL_CreateTextureFromSurface(game->renderer, surface);
     SDL_FreeSurface(surface);
     
+//    surface = IMG_Load("images/skeleton_2_d.png");
+//    if(surface == NULL){
+//        printf("cannot find skeleton_2_d.png!\n\n");
+//        SDL_Quit();
+//        exit(1);
+//    }
+//    game->manFrames[2] = SDL_CreateTextureFromSurface(game->renderer, surface);
+//    SDL_FreeSurface(surface);
+
     surface = IMG_Load("images/wall_bricks_2.png");
     if(surface == NULL){
         printf("cannot find skeleton_s.png!\n\n");
@@ -81,17 +102,6 @@ void loadGame(GameState *game)
         exit(1);
     }
     
-    //init music
-//    game->bgMusic = Mix_LoadWAV("music.wav");
-//        if(game->bgMusic != NULL)
-//        {
-//            Mix_VolumeChunk(game->bgMusic, 50);
-//        }
-//    game->jumpSound = Mix_LoadWAV("jump.m4a");
-//    game->landSound = Mix_LoadWAV("land.m4a");
-//    game->dieSound = Mix_LoadWAV("die.m4a");
-
-    
     game->label = NULL;
     game->label2 = NULL;
 
@@ -106,6 +116,8 @@ void loadGame(GameState *game)
     game->man.lives = 3;
     game->man.isDead = 0;
     game->statusState = STATUS_STATE_LIVES;
+    
+    game->laserSpeed = 2;
     
     init_status_lives(game);
 
@@ -122,7 +134,7 @@ void loadGame(GameState *game)
     game->ledges[0].x = 0;
     game->ledges[0].y = 400;
     
-    for(int i=1; i < NUMBER_STARS; i++){
+    for(int i=1; i < NUMBER_LEDGES; i++){
         game->ledges[i].w = 256;
         game->ledges[i].h = 64;
         game->ledges[i].x = i*280 + random()%200;
@@ -157,7 +169,6 @@ int processEvents(SDL_Window *window, GameState *game){
                         if(game->man.onLedge){
                             game->man.dy = -3;
                             game->man.onLedge = 0;
-//                            Mix_PlayChannel(-1, game->jumpSound, 0);
                         }
                     break;
                 }
@@ -231,7 +242,8 @@ void doRender(SDL_Renderer *renderer, GameState *game)
     //set the drawing color to white
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     
-    for(int i=0; i<NUMBER_STARS; i++)
+    // draw ledges
+    for(int i=0; i<NUMBER_LEDGES; i++)
     {
         SDL_Rect ledgeRect = {game->scrollX+game->ledges[i].x, game->scrollY+game->ledges[i].y, game->ledges[i].w, game->ledges[i].h};
         SDL_RenderCopy(renderer, game->brick, NULL, &ledgeRect);
@@ -245,13 +257,20 @@ void doRender(SDL_Renderer *renderer, GameState *game)
             SDL_Rect rect = {game->scrollX+game->man.x, game->scrollY+game->man.y, MAN_PIC_W, MAN_PIC_H};
             SDL_RenderCopyEx(renderer, game->fire, NULL, &rect, 0, NULL, (game->time%20 < 10));
         }
-        
-        //draw stars
-        for(int i = 0; i < NUMBER_STARS; i++){
-            SDL_Rect starRect = {game->scrollX+game->stars[i].x, game->scrollY+game->stars[i].y, 50, 50};
-            SDL_RenderCopy(renderer, game->star, NULL, &starRect);
+
+        for(int i = 0; i < NUMBER_GHOSTS; i++){
+        //draw lasers
+            if(game->lasers[i].onShot > 0){
+            SDL_Rect laserRect = {game->scrollX+game->lasers[i].x, game->scrollY+game->lasers[i].y, 57, 14};
+            SDL_RenderCopy(renderer, game->laser, NULL, &laserRect);
         }
             
+        //draw ghosts
+            SDL_Rect ghostRect = {game->scrollX+game->ghosts[i].x, game->scrollY+game->ghosts[i].y, 49, 72};
+//            SDL_RenderCopy(renderer, game->ghost, NULL, &ghostRect);
+            SDL_RenderCopyEx(renderer, game->ghost, NULL, &ghostRect, 0, NULL, 1);
+        }
+        
     // We are don drawing, "present" or show to the screen what we've drawn
     }
     
@@ -272,7 +291,6 @@ void process(GameState *game){
         {
             shutwon_status_lives(game);
             game->statusState = STATUS_STATE_GAME;
-//            game->musicChannel = Mix_PlayChannel(-1, game->bgMusic, -1);
         }
     }
     
@@ -309,20 +327,62 @@ void process(GameState *game){
             }
         }
             man->dy += GRAVITY;
-            // Stars movement
-            for(int i = 0; i < NUMBER_STARS; i++)
+            
+            // ghosts movement
+            for(int i = 3; i < NUMBER_GHOSTS; i++)
             {
-                game->stars[i].x = game->stars[i].baseX;
-                game->stars[i].y = game->stars[i].baseY;
+                game->ghosts[i].x = game->ghosts[i].baseX;
+                game->ghosts[i].y = game->ghosts[i].baseY;
                 
-                if(game->stars[i].mode == 0)
+                if(game->ghosts[i].mode == 0)
                 {
-                    game->stars[i].x = game->stars[i].baseX+sinf(game->stars[i].phase+game->time*0.01f)*75;
+                    game->ghosts[i].x = game->ghosts[i].baseX+sinf(game->ghosts[i].phase+game->time*0.01f)*75;
                 }
                 else
                 {
-                    game->stars[i].y = game->stars[i].baseY+cosf(game->stars[i].phase+game->time*0.01f)*75;
+                    game->ghosts[i].y = game->ghosts[i].baseY+cosf(game->ghosts[i].phase+game->time*0.01f)*75;
                 }
+                
+                
+// LASER MOVEMENT
+                if(game->lasers[i].onShot == 0)
+                {
+                    if(game->man.x+SET_WINDOW_W/4+random()%400 > game->ghosts[i].baseX)
+                    {
+                        game->lasers[i].onShot = 1;
+                    }
+                    else
+                    {
+                        game->lasers[i].x = game->ghosts[i].x;
+                    }
+                }
+                
+                if(game->lasers[i].onShot == 1)
+                {
+                    game->lasers[i].x -= game->laserSpeed;
+                    game->lasers[i].y = game->ghosts[i].y;
+                    game->lasers[i].onShot = 2;
+                }
+                
+                
+                if(game->lasers[i].onShot == 2){
+                    if(game->lasers[i].liveTime < 350)
+                    {
+                        game->lasers[i].x -= game->laserSpeed;
+                        game->lasers[i].liveTime++;
+                    }
+                    else if (game->lasers[i].liveTime < 600)
+                    {
+                        game->lasers[i].x = game->ghosts[i].x;
+                        game->lasers[i].y = game->ghosts[i].y;
+                        game->lasers[i].onShot = 0;
+                        game->lasers[i].liveTime++;
+                    }
+                    else{
+                            game->lasers[i].liveTime = 0;
+                        }
+                }
+                
             }
         }
         if(game->man.isDead && game->deathCount <0){
@@ -343,33 +403,43 @@ void process(GameState *game){
     if(game->scrollX > 0)
         game->scrollX = 0;
 }
+    
 
 //usefull utility function to see if two rectangle are colliding at all
-int collide2d(float man_x, float man_y, float star_x, float star_y, float man_w, float man_h, float star_w, float star_h){
-        return (!((man_x > (star_x+star_w)) || (star_x > (man_x+man_w)) || (man_y > (star_y+star_h)) || (star_y > (man_y+man_h))));
+int collide2dGhost(float man_x, float man_y, float ghost_x, float ghost_y, float man_w, float man_h, float ghost_w, float ghost_h){
+        return (!((man_x > (ghost_x+ghost_w)) || (ghost_x > (man_x+man_w)) || (man_y > (ghost_y+ghost_h)) || (ghost_y > (man_y+man_h))));
 }
+
+    
+int collide2dLaser(float man_x, float man_y, float laser_x, float laser_y, float man_w, float man_h, float laser_w, float laser_h){
+        return (!((man_x > (laser_x+laser_w)) || (laser_x > (man_x+man_w)) || (man_y > (laser_y+laser_h)) || (laser_y > (man_y+man_h))));
+}
+    
 
 
 void collisionDetect(GameState *game){
     
-    for(int i = 0; i < NUMBER_STARS; i++){
-        if(collide2d(game->man.x, game->man.y, game->stars[i].x, game->stars[i].y, MAN_PIC_W, MAN_PIC_H, 20, 20)){
+    for(int i = 0; i < NUMBER_GHOSTS; i++){
+        if(collide2dGhost(game->man.x, game->man.y, game->ghosts[i].x, game->ghosts[i].y, 30, 60, 30, 50)){
             game->man.isDead = 1;
-//            Mix_HaltChannel(game->musicChannel);
-//            break;
+        }
+    }
+    
+    for(int i = 0; i < NUMBER_GHOSTS; i++){
+        if(collide2dLaser(game->man.x, game->man.y, game->lasers[i].x, game->lasers[i].y, 30, 60, 22, 20)){
+            game->man.isDead = 1;
         }
     }
     
     // Check for collision with any ledges (brick blocks)
-    for(int i=0; i<NUMBER_STARS; i++){
+    for(int i=0; i<NUMBER_LEDGES; i++){
         float mw = MAN_PIC_W, mh = MAN_PIC_H;
         float mx = game->man.x, my = game->man.y;
         float bx = game->ledges[i].x, by = game->ledges[i].y, bw = game->ledges[i].w, bh = game->ledges[i].h;
         
         if(game->man.y > SET_WINDOW_H)
         {
-            game->man.x = START_MAN_POS_X;
-            game->man.y = START_MAN_POS_X;
+            game->man.isDead = 1;
         }
         
         
@@ -429,9 +499,14 @@ void collisionDetect(GameState *game){
 
 
 void logInfo(GameState *game){
-    if(game->man.dx > 0 || game->man.dy> 0){
-        printf("x: %f, y: %f\n", game->man.x, game->man.y);
+//    if(game->man.dx > 0 || game->man.dy> 0){
+//        printf("x: %f, y: %f\n", game->man.x, game->man.y);
+//    }
+    if(game->time % 100 == 0 )
+    {
+        printf("x: %d\n", game->lasers[3].onShot);
     }
+
 }
 
 
@@ -455,14 +530,10 @@ int main(int argc, const char * argv[])
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     gameState.renderer = renderer;
     
-    // Initialize fonts
     TTF_Init();
-    
-    // init sound
-//    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4096);
-    
+        
     loadGame(&gameState);
-    initStars(&gameState);
+    initGhosts(&gameState);
     
     while(!done)    // Event loop
     {
@@ -470,23 +541,19 @@ int main(int argc, const char * argv[])
         collisionDetect(&gameState);
         process(&gameState);
         doRender(renderer, &gameState);             // Render display
-//        logInfo(&gameState);
+        logInfo(&gameState);
         SDL_Delay(2);       // against too fast gaming
     }
     
     // Shutdown game and unload all memory
-    SDL_DestroyTexture(gameState.star);
+    SDL_DestroyTexture(gameState.ghost);
+    SDL_DestroyTexture(gameState.laser);
     SDL_DestroyTexture(gameState.manFrames[0]);
     SDL_DestroyTexture(gameState.manFrames[1]);
     SDL_DestroyTexture(gameState.brick);
     if(gameState.label != NULL)
         SDL_DestroyTexture(gameState.label);
     TTF_CloseFont(gameState.font);
-    
-//    Mix_FreeChunk(gameState.bgMusic);
-//    Mix_FreeChunk(gameState.jumpSound);
-//    Mix_FreeChunk(gameState.landSound);
-//    Mix_FreeChunk(gameState.dieSound);
     
     // Close and destroy the window
     SDL_DestroyWindow(window);
