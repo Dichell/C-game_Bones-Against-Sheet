@@ -344,7 +344,7 @@ void process(GameState *game){
                 }
                 
                 
-// LASER MOVEMENT
+// LASER MOVEMENT  begin
                 if(game->lasers[i].onShot == 0)
                 {
                     if(game->man.x+SET_WINDOW_W/4+random()%400 > game->ghosts[i].baseX)
@@ -382,7 +382,8 @@ void process(GameState *game){
                             game->lasers[i].liveTime = 0;
                         }
                 }
-                
+// LASER MOVEMENT  end
+
             }
         }
         if(game->man.isDead && game->deathCount <0){
