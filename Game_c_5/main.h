@@ -16,7 +16,7 @@
 #define MAN_PIC_W 49
 
 #define NUMBER_GHOSTS 20
-#define NUMBER_LEDGES 2
+#define NUMBER_LEDGES 20
 
 #define GRAVITY 0.02f
 

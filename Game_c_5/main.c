@@ -520,10 +520,16 @@ void collisionDetect(GameState *game){
         }
         
 // Finish
-        if(game->skeleton.x > game->finishX-100 && game->skeleton.y < game->finishY - 80)
-        {
-            game->skeleton.status = 2;
+        if(game->skeleton.x > game->finishX-100){
+            if(game->skeleton.y < game->finishY - 80 && game->skeleton.y > game->finishY){
+                game->skeleton.status = 2;
+            }
         }
+        
+//        if(game->skeleton.x > game->finishX-100 && game->skeleton.y < game->finishY - 80)
+//        {
+//            game->skeleton.status = 2;
+//        }
         
         
         if(mx+mw/2 > bx && mx+mw/2 < bx+bw)

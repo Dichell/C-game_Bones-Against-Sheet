@@ -10,7 +10,7 @@ void init_start_screen(GameState *game){
     
     SDL_Color white = {255, 255, 255, 255};
         
-    SDL_Surface *tmp1 = TTF_RenderText_Blended(game->font1, "SKELRUN", white);
+    SDL_Surface *tmp1 = TTF_RenderText_Blended(game->font1, "Bones Against Sheets", white);
     game->label1W = tmp1->w;
     game->label1H = tmp1->h;
     game->label1 = SDL_CreateTextureFromSurface(game->renderer, tmp1);
