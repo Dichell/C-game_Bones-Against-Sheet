@@ -1,4 +1,5 @@
 #ifndef Header_h
+
 #define Header_h
 
 #define STATUS_STATE_LIVES 0
@@ -14,34 +15,38 @@
 #define MAN_PIC_H 72
 #define MAN_PIC_W 49
 
-#define NUMBER_GHOSTS 100
-#define NUMBER_LEDGES 100
+#define NUMBER_GHOSTS 20
+#define NUMBER_LEDGES 2
+
+#define GRAVITY 0.02f
+
+//int gap;
 
 #include <SDL2/SDL.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2_image/SDL_image.h>
-#include <SDL2_mixer/SDL_mixer.h>
 
 typedef struct {
-    int startManX, startManY;
+    int startSkeletX, startSkeletY;
     float x, y;
     float dx, dy;
     short lives;
     char *name;
-    int onLedge, isDead;
+    int onLedge;
+    int status;     // 1 - dead, 2 - finish
     int animFrame, facingLeft, slowingDown;
-} Man;
+} Skeleton;
 
 
 typedef struct {
-    int x, y, baseX, baseY, mode;
+    int x, y, baseX, baseY, startY, middleY, mode;
     float phase;
 } Ghost;
 
 
 typedef struct {
-    int x, y, onShot, liveTime;
-    float phase, time;
+    int onShot, liveTime;
+    float x, y;
 } Laser;
 
 
@@ -52,9 +57,9 @@ typedef struct {
 
 typedef struct {
     
-    float scrollX, scrollY;
+    float scrollX, scrollY, laserGravity;
     
-    Man man;            // Player
+    Skeleton skeleton;            // Player
     Ghost ghosts[NUMBER_GHOSTS];    // Ghosts
     Laser lasers[NUMBER_GHOSTS];
     Ledge ledges[NUMBER_LEDGES];
@@ -64,25 +69,28 @@ typedef struct {
     SDL_Texture *manFrames[3];  // Images
     SDL_Texture *brick;         // Images
     SDL_Texture *fire;
+    SDL_Texture *blackHole;
 
-    SDL_Texture *label, *label2;
-    int labelW, labelH, labelW2, labelH2;
+    SDL_Texture *label1, *label2, *label3, *label4;
+    int label1W, label1H, label2W, label2H, label3W, label3H, label4W, label4H;
     
     // Fonts
-    TTF_Font *font;
-    
+    TTF_Font *font1;
+    TTF_Font *font2;
+
     // Time
-    int time, deathCount, laserSpeed;
+    int time, deathCount, laserSpeed, ghostStartY;
     int statusState;
-    
-    // Sounds
-    int musicChannel;
-    Mix_Chunk *bgMusic, *jumpSound, *landSound, *dieSound;
+    int finishX, finishY;
     
     SDL_Renderer *renderer;
 } GameState;
 
+
 // Prototypes (function references)
-void doRender(SDL_Renderer *renderer, GameState *game);
+void init_start_screen(GameState *gameState);
+void draw_status_lives(GameState *gameState);
+void shutwon_status_lives(GameState *gameState);
+
 
 #endif /* Header_h */

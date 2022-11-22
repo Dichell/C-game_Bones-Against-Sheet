@@ -8,31 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		FA15E487290A61FA00F7AC88 /* status.c in Sources */ = {isa = PBXBuildFile; fileRef = FA15E486290A61FA00F7AC88 /* status.c */; };
-		FA491C03290EDD920014FC06 /* Sounds in CopyFiles */ = {isa = PBXBuildFile; fileRef = FA491C02290EDD920014FC06 /* Sounds */; };
-		FA5BB32B290E471C0047175E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB327290E471C0047175E /* SDL2.framework */; };
-		FA5BB32C290E471C0047175E /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB327290E471C0047175E /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA5BB32D290E471C0047175E /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB328290E471C0047175E /* SDL2_ttf.framework */; };
-		FA5BB32E290E471C0047175E /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB328290E471C0047175E /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA5BB32F290E471C0047175E /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB329290E471C0047175E /* SDL2_mixer.framework */; };
-		FA5BB330290E471C0047175E /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB329290E471C0047175E /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA5BB331290E471C0047175E /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB32A290E471C0047175E /* SDL2_image.framework */; };
-		FA5BB332290E471C0047175E /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB32A290E471C0047175E /* SDL2_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA75EADF292CF02700EB8A6F /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB329290E471C0047175E /* SDL2_mixer.framework */; };
+		FA75EAE0292CF02700EB8A6F /* SDL2_mixer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB329290E471C0047175E /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA75EAE1292CF02700EB8A6F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB327290E471C0047175E /* SDL2.framework */; };
+		FA75EAE2292CF02700EB8A6F /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB327290E471C0047175E /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA75EAE3292CF02700EB8A6F /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB32A290E471C0047175E /* SDL2_image.framework */; };
+		FA75EAE4292CF02700EB8A6F /* SDL2_image.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB32A290E471C0047175E /* SDL2_image.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA75EAE5292CF02700EB8A6F /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB328290E471C0047175E /* SDL2_ttf.framework */; };
+		FA75EAE6292CF02700EB8A6F /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA5BB328290E471C0047175E /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAB43E3D2908486D00EF9CEE /* images in CopyFiles */ = {isa = PBXBuildFile; fileRef = FAB43E3C2908486D00EF9CEE /* images */; };
 		FACA051A290ABD4E0007D94D /* Fonts in CopyFiles */ = {isa = PBXBuildFile; fileRef = FACA0519290ABD4E0007D94D /* Fonts */; };
 		FAE94ECA29073D4600BCE804 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = FAE94EC929073D4600BCE804 /* main.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FA5BB333290E471C0047175E /* Embed Frameworks */ = {
+		FA75EAE7292CF02700EB8A6F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FA5BB330290E471C0047175E /* SDL2_mixer.framework in Embed Frameworks */,
-				FA5BB32E290E471C0047175E /* SDL2_ttf.framework in Embed Frameworks */,
-				FA5BB32C290E471C0047175E /* SDL2.framework in Embed Frameworks */,
-				FA5BB332290E471C0047175E /* SDL2_image.framework in Embed Frameworks */,
+				FA75EAE6292CF02700EB8A6F /* SDL2_ttf.framework in Embed Frameworks */,
+				FA75EAE4292CF02700EB8A6F /* SDL2_image.framework in Embed Frameworks */,
+				FA75EAE0292CF02700EB8A6F /* SDL2_mixer.framework in Embed Frameworks */,
+				FA75EAE2292CF02700EB8A6F /* SDL2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -43,7 +42,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				FA491C03290EDD920014FC06 /* Sounds in CopyFiles */,
 				FACA051A290ABD4E0007D94D /* Fonts in CopyFiles */,
 				FAB43E3D2908486D00EF9CEE /* images in CopyFiles */,
 			);
@@ -52,21 +50,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FA15617A29085EE200FB4587 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
-		FA15617B29085EE200FB4587 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_image.framework; sourceTree = "<group>"; };
 		FA15E486290A61FA00F7AC88 /* status.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = status.c; sourceTree = "<group>"; };
 		FA15E488290A62B500F7AC88 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		FA15E489290A6E0A00F7AC88 /* status.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = status.h; sourceTree = "<group>"; };
-		FA15E48A290ABAE500F7AC88 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_ttf.framework; sourceTree = "<group>"; };
-		FA3F3D95290BCA5B00DCCB09 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = "<group>"; };
-		FA491C02290EDD920014FC06 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sounds; path = ../../../Downloads/Game_c_5/Game_c_5/Sounds; sourceTree = "<group>"; };
-		FA5BB325290E46FC0047175E /* Alon-HW_Game_5_Skelrun */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Alon-HW_Game_5_Skelrun"; sourceTree = "<group>"; };
 		FA5BB326290E470D0047175E /* Frameworks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Frameworks; sourceTree = "<group>"; };
 		FA5BB327290E471C0047175E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		FA5BB328290E471C0047175E /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
 		FA5BB329290E471C0047175E /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
 		FA5BB32A290E471C0047175E /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
-		FAACBC522909512600B1482C /* Game_c_5 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Game_c_5; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA75EADE292CEFF400EB8A6F /* Game_c_5 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Game_c_5; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAB43E3C2908486D00EF9CEE /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = Game_c_5/images; sourceTree = "<group>"; };
 		FACA0519290ABD4E0007D94D /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		FAE94EC929073D4600BCE804 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
@@ -77,10 +68,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA5BB32F290E471C0047175E /* SDL2_mixer.framework in Frameworks */,
-				FA5BB32D290E471C0047175E /* SDL2_ttf.framework in Frameworks */,
-				FA5BB32B290E471C0047175E /* SDL2.framework in Frameworks */,
-				FA5BB331290E471C0047175E /* SDL2_image.framework in Frameworks */,
+				FA75EAE5292CF02700EB8A6F /* SDL2_ttf.framework in Frameworks */,
+				FA75EAE3292CF02700EB8A6F /* SDL2_image.framework in Frameworks */,
+				FA75EADF292CF02700EB8A6F /* SDL2_mixer.framework in Frameworks */,
+				FA75EAE1292CF02700EB8A6F /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,12 +81,11 @@
 		FAE94EBD29073D4600BCE804 = {
 			isa = PBXGroup;
 			children = (
-				FA491C02290EDD920014FC06 /* Sounds */,
 				FACA0519290ABD4E0007D94D /* Fonts */,
 				FAB43E3C2908486D00EF9CEE /* images */,
 				FAE94EC829073D4600BCE804 /* Game_c_5 */,
 				FAE94ED02907451200BCE804 /* Frameworks */,
-				FAACBC522909512600B1482C /* Game_c_5 */,
+				FA75EADE292CEFF400EB8A6F /* Game_c_5 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,7 +95,6 @@
 				FAE94EC929073D4600BCE804 /* main.c */,
 				FA15E488290A62B500F7AC88 /* main.h */,
 				FA15E486290A61FA00F7AC88 /* status.c */,
-				FA15E489290A6E0A00F7AC88 /* status.h */,
 			);
 			path = Game_c_5;
 			sourceTree = "<group>";
@@ -118,11 +107,6 @@
 				FA5BB328290E471C0047175E /* SDL2_ttf.framework */,
 				FA5BB327290E471C0047175E /* SDL2.framework */,
 				FA5BB326290E470D0047175E /* Frameworks */,
-				FA5BB325290E46FC0047175E /* Alon-HW_Game_5_Skelrun */,
-				FA3F3D95290BCA5B00DCCB09 /* SDL2_mixer.framework */,
-				FA15E48A290ABAE500F7AC88 /* SDL2_ttf.framework */,
-				FA15617B29085EE200FB4587 /* SDL2_image.framework */,
-				FA15617A29085EE200FB4587 /* SDL2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -137,7 +121,7 @@
 				FAE94EC229073D4600BCE804 /* Sources */,
 				FAE94EC329073D4600BCE804 /* Frameworks */,
 				FAE94EC429073D4600BCE804 /* CopyFiles */,
-				FA5BB333290E471C0047175E /* Embed Frameworks */,
+				FA75EAE7292CF02700EB8A6F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -145,7 +129,7 @@
 			);
 			name = Game_c_5;
 			productName = Game_c_5;
-			productReference = FAACBC522909512600B1482C /* Game_c_5 */;
+			productReference = FA75EADE292CEFF400EB8A6F /* Game_c_5 */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
