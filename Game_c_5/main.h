@@ -6,7 +6,7 @@
 #define STATUS_STATE_GAME 1
 #define STATUS_STATE_GAMEOVER 2
 
-#define SET_WINDOW_W 960                              // width, in pixels
+#define SET_WINDOW_W 960
 #define SET_WINDOW_H 720
 
 #define START_MAN_POS_X 90
@@ -15,19 +15,18 @@
 #define MAN_PIC_H 72
 #define MAN_PIC_W 49
 
-#define NUMBER_GHOSTS 20
-#define NUMBER_LEDGES 20
+#define NUMBER_GHOSTS 5
+#define NUMBER_LEDGES 5
 
 #define GRAVITY 0.02f
-
-//int gap;
 
 #include <SDL2/SDL.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2_image/SDL_image.h>
 
+
 typedef struct {
-    int startSkeletX, startSkeletY;
+    int startSkeletX, startSkeletY, h, w;
     float x, y;
     float dx, dy;
     short lives;
@@ -92,5 +91,14 @@ void init_start_screen(GameState *gameState);
 void draw_status_lives(GameState *gameState);
 void shutwon_status_lives(GameState *gameState);
 
+void loadGame(GameState *game);
+
+void initGhosts(GameState *game);
+
+void collisionDetect(GameState *game);
+
+void process(GameState *game);
+
+void doRender(SDL_Renderer *renderer, GameState *game);
 
 #endif /* Header_h */
