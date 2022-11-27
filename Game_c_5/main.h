@@ -15,8 +15,8 @@
 #define MAN_PIC_H 72
 #define MAN_PIC_W 49
 
-#define NUMBER_GHOSTS 5
-#define NUMBER_LEDGES 5
+#define NUMBER_GHOSTS 50
+#define NUMBER_LEDGES 50
 
 #define GRAVITY 0.02f
 
@@ -86,7 +86,7 @@ typedef struct {
 } GameState;
 
 
-// Prototypes (function references)
+// Function references
 void init_start_screen(GameState *gameState);
 void draw_status_lives(GameState *gameState);
 void shutwon_status_lives(GameState *gameState);

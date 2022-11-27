@@ -7,6 +7,7 @@
 int done = 0;
 
 int processEvents(SDL_Window *window, GameState *game){
+    
     SDL_Event event;
 
     while(SDL_PollEvent(&event))
@@ -75,12 +76,6 @@ int processEvents(SDL_Window *window, GameState *game){
     
     if (game->skeleton.status > 0)
     {
-//        if(game->skeleton.w > 0 && game->time % 10 == 0){
-//        game->skeleton.h --;
-//        game->skeleton.w --;
-//        game->skeleton.y ++;
-//        game->skeleton.x ++;
-//        }
 
         if(state[SDL_SCANCODE_R])
         {
@@ -110,8 +105,8 @@ int main(int argc, const char * argv[])
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);   // Initialize SDL2
     
     srandom((int)time(NULL));
-    
-    //Create an application window with the following settings:
+
+//Create an application window with the following settings:
     window = SDL_CreateWindow("Game Window",                    // window title
                               SDL_WINDOWPOS_UNDEFINED,          // initial x position
                               SDL_WINDOWPOS_UNDEFINED,          // initioal y position
@@ -126,7 +121,8 @@ int main(int argc, const char * argv[])
     loadGame(&gameState);
     initGhosts(&gameState);
 
-    while(!done)    // Event loop
+// Event loop
+    while(!done)
     {
         done = processEvents(window, &gameState);        // Check for events
         collisionDetect(&gameState);
@@ -136,7 +132,7 @@ int main(int argc, const char * argv[])
 
     }
     
-    // Shutdown game and unload all memory
+// Shutdown game and unload all memory
     SDL_DestroyTexture(gameState.ghost);
     SDL_DestroyTexture(gameState.laser);
     SDL_DestroyTexture(gameState.manFrames[0]);
@@ -156,7 +152,7 @@ int main(int argc, const char * argv[])
     TTF_CloseFont(gameState.font1);
     TTF_CloseFont(gameState.font2);
 
-    // Close and destroy the window
+// Close and destroy the window
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     
